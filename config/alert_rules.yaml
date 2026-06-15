@@ -1,19 +1,60 @@
+# Alert rules for the Day13 observability agent.
+#
+# Thresholds are tied to the SLOs in config/slo.yaml. Rules are evaluated by
+# scripts/check_alerts.py against the GET /metrics snapshot.
+#
+# NOTE on the `window` field: the lab evaluator checks the *instantaneous*
+# snapshot. The `window` documents the sustained duration a production
+# monitoring system (Prometheus/Grafana) would require before paging, so an
+# alert is not tripped by a single noisy data point.
+#
+# Each rule is machine-parseable via {metric, comparator, threshold} and also
+# carries a human-readable `condition` mirror for the runbook.
 alerts:
   - name: high_latency_p95
     severity: P2
-    condition: latency_p95_ms > 5000 for 30m
+    metric: latency_p95_ms
+    comparator: ">"
+    threshold: 2000
+    window: 30m
+    condition: "latency_p95_ms > 2000 for 30m"
     type: symptom-based
     owner: team-oncall
     runbook: docs/alerts.md#1-high-latency-p95
+    note: "Early-warning below the 3000ms p95 SLO objective. Trips on the rag_slow incident (~2650ms)."
+
   - name: high_error_rate
     severity: P1
-    condition: error_rate_pct > 5 for 5m
+    metric: error_rate_pct
+    comparator: ">"
+    threshold: 5
+    window: 5m
+    condition: "error_rate_pct > 5 for 5m"
     type: symptom-based
     owner: team-oncall
     runbook: docs/alerts.md#2-high-error-rate
+    note: "SLO objective is <2% errors; page at >5%. Trips on the tool_fail incident."
+
   - name: cost_budget_spike
     severity: P2
-    condition: hourly_cost_usd > 2x_baseline for 15m
+    metric: avg_cost_usd
+    comparator: ">"
+    threshold: 0.004
+    window: 15m
+    condition: "avg_cost_usd > 0.004 for 15m"
     type: symptom-based
     owner: finops-owner
     runbook: docs/alerts.md#3-cost-budget-spike
+    note: "Baseline avg cost ~$0.002/req; fire at >2x baseline. Trips on the cost_spike incident."
+
+  - name: low_quality_score
+    severity: P3
+    metric: quality_avg
+    comparator: "<"
+    threshold: 0.75
+    window: 1h
+    condition: "quality_avg < 0.75 for 1h"
+    type: symptom-based
+    owner: team-oncall
+    runbook: docs/alerts.md#4-low-quality-score
+    note: "Guards the 0.75 quality SLO. Not driven by the 3 built-in incidents; only fires on real quality regressions."

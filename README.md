@@ -46,6 +46,12 @@ python scripts/inject_incident.py --scenario rag_slow
 
 # Check your implementation progress
 python scripts/validate_logs.py
+
+# Evaluate alert rules against the live /metrics snapshot (exit 1 if any firing)
+python scripts/check_alerts.py
+
+# Test all alert rules end-to-end (boots an isolated app per incident scenario)
+python scripts/test_alerts.py
 ```
 
 ## Repo map
@@ -111,3 +117,10 @@ Your final grade is calculated as follows:
 - All `TODO` blocks must be completed.
 - Minimum of 10 traces must be visible in Langfuse.
 - Dashboard must show all 6 required panels.
+
+
+Link
+
+https://langfuse.com/docs/prompt-management/get-started
+https://langfuse.com/docs/observability/features/user-feedback
+https://langfuse.com/docs/observability/features/comments

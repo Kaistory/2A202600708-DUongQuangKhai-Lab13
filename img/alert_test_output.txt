@@ -1,0 +1,33 @@
+$ python scripts/test_alerts.py
+Loaded 4 alert rules from config/alert_rules.yaml
+
+=== Scenario: baseline  (incident=none, port=8001) ===
+   [  ok  ] high_latency_p95       latency_p95_ms > 2000 (current=152)
+   [  ok  ] high_error_rate        error_rate_pct > 5 (current=0)
+   [  ok  ] cost_budget_spike      avg_cost_usd > 0.004 (current=0.0023)
+   [  ok  ] low_quality_score      quality_avg < 0.75 (current=0.88)
+   -> expected=[]  fired=[]  [PASS]
+
+=== Scenario: rag_slow  (incident=rag_slow, port=8002) ===
+   [FIRING] high_latency_p95       latency_p95_ms > 2000 (current=2652)
+   [  ok  ] high_error_rate        error_rate_pct > 5 (current=0)
+   [  ok  ] cost_budget_spike      avg_cost_usd > 0.004 (current=0.0023)
+   [  ok  ] low_quality_score      quality_avg < 0.75 (current=0.88)
+   -> expected=['high_latency_p95']  fired=['high_latency_p95']  [PASS]
+
+=== Scenario: cost_spike  (incident=cost_spike, port=8003) ===
+   [  ok  ] high_latency_p95       latency_p95_ms > 2000 (current=151)
+   [  ok  ] high_error_rate        error_rate_pct > 5 (current=0)
+   [FIRING] cost_budget_spike      avg_cost_usd > 0.004 (current=0.0084)
+   [  ok  ] low_quality_score      quality_avg < 0.75 (current=0.88)
+   -> expected=['cost_budget_spike']  fired=['cost_budget_spike']  [PASS]
+
+=== Scenario: tool_fail  (incident=tool_fail, port=8004) ===
+   [  ok  ] high_latency_p95       latency_p95_ms > 2000 (current=no-data)
+   [FIRING] high_error_rate        error_rate_pct > 5 (current=100)
+   [  ok  ] cost_budget_spike      avg_cost_usd > 0.004 (current=no-data)
+   [  ok  ] low_quality_score      quality_avg < 0.75 (current=no-data)
+   -> expected=['high_error_rate']  fired=['high_error_rate']  [PASS]
+
+============================================================
+RESULT: ALL SCENARIOS PASSED   (exit code 0)

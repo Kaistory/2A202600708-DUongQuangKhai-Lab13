@@ -38,3 +38,16 @@
   - shorten prompts
   - route easy requests to cheaper model
   - apply prompt cache
+
+## 4. Low quality score
+- Severity: P3
+- Trigger: `quality_avg < 0.75 for 1h`
+- Impact: answer quality degrades below the SLO; users get less useful responses
+- First checks:
+  1. Compare quality scores by `feature` and `model`
+  2. Check whether retrieval is returning the fallback ("No domain document matched")
+  3. Inspect whether PII redaction is stripping answer content (`[REDACTED]`)
+- Mitigation:
+  - improve retrieval coverage / corpus
+  - tune the prompt to use retrieved context
+  - revert the regressing change
