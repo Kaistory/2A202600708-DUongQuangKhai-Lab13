@@ -33,11 +33,19 @@
 ### 3.1 Logging & Tracing
 - [EVIDENCE_CORRELATION_ID_SCREENSHOT]: data/logs.jsonl — every `service:"api"` record carries a unique `correlation_id` (e.g. `req-11b60e7c`); 532 unique IDs across 1111 records (verified by `scripts/validate_logs.py`). Set in `app/middleware.py` (CorrelationIdMiddleware).
 - [EVIDENCE_PII_REDACTION_SCREENSHOT]: data/logs.jsonl — message previews show `[REDACTED_EMAIL]` and `[REDACTED_PHONE_VN]` (scrubber in `app/logging_config.py` / `app/pii.py`). Example: input `"... My email is student@vinuni.edu.vn"` is logged as `"... My email is [REDACTED_EMAIL]"`.
-- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: img/langfuse_error_traces.png (Langfuse Tracing view, observations list)
+- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: img/image.png (Langfuse Tracing view — note the red `ERR` level badges on the `retrieve`/`run` spans for the failing "this should fail" requests)
+
+  ![Langfuse traces with ERROR-level spans](../img/image.png)
+
+  ![Langfuse observations list](../img/langfuse_error_traces.png)
 - [TRACE_WATERFALL_EXPLANATION]: Each `/chat` trace is a root span **`run`** (the agent pipeline) with two child spans: **`retrieve`** (RAG) and **`generate`** (LLM). The most interesting span is `retrieve`: under the `rag_slow` incident it balloons from a few ms to ~2.5s (`time.sleep(2.5)`), so the trace immediately localizes the latency to the retrieval step rather than the LLM — exactly what tracing is for.
 
 ### 3.2 Dashboard & SLOs
 - [DASHBOARD_6_PANELS_SCREENSHOT]: img/dashboard_grid.png and img/dashboard_grid_bottom.png (Langfuse custom dashboard "Lab13 — Observability (6-Panel)", arranged as a 3×3 grid: latency p50/p95/p99 · traffic/errors/cost · tokens/quality)
+
+  ![Dashboard — latency p50/p95/p99 and traffic/errors/cost](../img/dashboard_grid.png)
+
+  ![Dashboard — traffic/errors/cost and tokens/quality](../img/dashboard_grid_bottom.png)
 - [SLO_TABLE]:
 | SLI | Target | Window | Current Value |
 |---|---:|---|---:|
