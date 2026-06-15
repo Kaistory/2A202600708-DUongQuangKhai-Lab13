@@ -7,7 +7,7 @@
 
 ## 1. Team Metadata
 - [GROUP_NAME]: Solo Submission — Dương Quang Khải
-- [REPO_URL]: https://github.com/Kaistory/Lab13-Observability-DUongQuangKhai-2A202600708
+- [REPO_URL]: https://github.com/Kaistory/2A202600708-DUongQuangKhai-Lab13
 - [MEMBERS]:
   - Member A: Dương Quang Khải | Role: ALL (Logging & PII, Tracing & Enrichment, SLO & Alerts, Load Test & Dashboard, Demo & Report)
   - Member B: N/A (solo submission)
@@ -95,7 +95,7 @@
   - **SLO & Alerts**: configured `config/alert_rules.yaml` (4 SLO-aligned rules + runbook §4 in `docs/alerts.md`); built `scripts/check_alerts.py` (alert engine/CLI) and `scripts/test_alerts.py` (automated 4-scenario test). All scenarios pass.
   - **Load Test & Dashboard**: ran `scripts/load_test.py`; built the 6-panel Langfuse dashboard and arranged it as a clean 3×3 grid.
   - **Demo & Report**: this report + evidence in `img/`.
-- [EVIDENCE_LINK]: https://github.com/Kaistory/Lab13-Observability-DUongQuangKhai-2A202600708/commits/main — key files: `config/alert_rules.yaml`, `scripts/check_alerts.py`, `scripts/test_alerts.py`, `app/agent.py`, `app/tracing.py`, `app/middleware.py`, `app/logging_config.py`, `docs/alerts.md`, `img/`.
+- [EVIDENCE_LINK]: https://github.com/Kaistory/2A202600708-DUongQuangKhai-Lab13/commits/main — key files: `config/alert_rules.yaml`, `scripts/check_alerts.py`, `scripts/test_alerts.py`, `app/agent.py`, `app/tracing.py`, `app/middleware.py`, `app/logging_config.py`, `docs/alerts.md`, `img/`.
 
 ### [MEMBER_B_NAME]
 - [TASKS_COMPLETED]: N/A (solo submission)
