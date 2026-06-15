@@ -2,7 +2,7 @@
 
 Template repo for a 4-hour hands-on lab on Monitoring, Logging, and Observability.
 
-## What students will build
+## What students will build 
 
 A small FastAPI "agent" instrumented with:
 - structured JSON logging
